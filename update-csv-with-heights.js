@@ -1,16 +1,17 @@
 const fs = require('fs');
-const https = require('https');
 
+// const FILE_NAME = 'dtm_aza_ai_2022_wg84geo_05';
+const FILE_NAME = 'vricon_dtm_wgs84Geo_orthometric_z';
+const DEM_HEIGHTS_TOKEN = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1pbnQifQ.eyJkIjpbInJhc3RlciIsInJhc3RlcldtcyIsInJhc3RlckV4cG9ydCIsImRlbSIsInZlY3RvciIsIjNkIl0sImlhdCI6MTY3NDYzMjM0Niwic3ViIjoibWFwY29sb25pZXMtYXBwIiwiaXNzIjoibWFwY29sb25pZXMtdG9rZW4tY2xpIn0.D1u28gFlxf_Z1bzIiRHZonUgrdWwhZy8DtmQj15cIzaABRUrGV2n_OJlgWTuNfrao0SbUZb_s0_qUUW6Gz_zO3ET2bVx5xQjBu0CaIWdmUPDjEYr6tw-eZx8EjFFIyq3rs-Fo0daVY9cX1B2aGW_GeJir1oMnJUURhABYRoh60azzl_utee9UdhDpnr_QElNtzJZIKogngsxCWp7tI7wkTuNCBaQM7aLEcymk0ktxlWEAt1E0nGt1R-bx-HnPeeQyZlxx4UQ1nuYTijpz7N8poaCCExOFeafj9T7megv2BzTrKWgfM1eai8srSgNa3I5wKuW0EyYnGZxdbJe8aseZg';
+// const DEM_HEIGHTS_URL = `https://dem-int-heights-poc-production-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1/points?token=${DEM_HEIGHTS_TOKEN}`;
+const DEM_HEIGHTS_URL = `http://localhost:9000/points?token=${DEM_HEIGHTS_TOKEN}`;
 const FILE_EXTENSION = '.csv';
-const CSV_DELIMITER = '\n';
+// const CSV_DELIMITER = '\r\n';  // <-For Windows
+const CSV_DELIMITER = '\n';  // <-For Linux
 const CSV_COLUMN_SEPARATOR = ',';
 const DATA_DIR = 'data';
 const OUTPUT_DIR = 'output';
-const FILE_NAME = 'dtm_aza_ai_2022_wg84geo_05';
 const OUTPUT_FILE_NAME = `${OUTPUT_DIR}/${FILE_NAME}_UPDATED${FILE_EXTENSION}`;
-const DEM_HEIGHTS_TOKEN = 'eyJhbGciOiJSUzI1NiIsImtpZCI6Im1hcC1jb2xvbmllcy1pbnQifQ.eyJkIjpbInJhc3RlciIsInJhc3RlcldtcyIsInJhc3RlckV4cG9ydCIsImRlbSIsInZlY3RvciIsIjNkIl0sImlhdCI6MTY3NDYzMjM0Niwic3ViIjoibWFwY29sb25pZXMtYXBwIiwiaXNzIjoibWFwY29sb25pZXMtdG9rZW4tY2xpIn0.D1u28gFlxf_Z1bzIiRHZonUgrdWwhZy8DtmQj15cIzaABRUrGV2n_OJlgWTuNfrao0SbUZb_s0_qUUW6Gz_zO3ET2bVx5xQjBu0CaIWdmUPDjEYr6tw-eZx8EjFFIyq3rs-Fo0daVY9cX1B2aGW_GeJir1oMnJUURhABYRoh60azzl_utee9UdhDpnr_QElNtzJZIKogngsxCWp7tI7wkTuNCBaQM7aLEcymk0ktxlWEAt1E0nGt1R-bx-HnPeeQyZlxx4UQ1nuYTijpz7N8poaCCExOFeafj9T7megv2BzTrKWgfM1eai8srSgNa3I5wKuW0EyYnGZxdbJe8aseZg';
-const DEM_HEIGHTS_URL = `http://localhost:9000/points?token=${DEM_HEIGHTS_TOKEN}`;
-// const DEM_HEIGHTS_URL = `https://dem-int-heights-poc-production-nginx-route-integration.apps.j1lk3njp.eastus.aroapp.io/api/heights/v1/points?token=${DEM_HEIGHTS_TOKEN}`;
 const COLUMN_HEADER_NAME_FOR_HEIGHT_DATA = 'HEIGHT';
 const COLUMN_HEADER_NAME_FOR_DIFFERENCE = 'DIFFERENCE (ABS)';
 const COLUMN_HEADER_NAME_FOR_MAX_DIFFERENCE = 'MAX DIFFERENCE (ABS)';
